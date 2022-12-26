@@ -1,7 +1,6 @@
 let city = `Mauern`;
 let unit = `C`;
 const apikey = `5d1cc257e99203c5d51d3dc88e914990`;
-const googeapikey = `AIzaSyA7M6_URpqgHbgO_Z0bRFVyMjsCZ3XrqDs`;
 
 const weather = async function () {
   const data = await fetch(
