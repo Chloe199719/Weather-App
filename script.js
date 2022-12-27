@@ -78,7 +78,6 @@ const apirequests = (() => {
     });
     if (data.status === 200) {
       const procData = await data.json();
-      console.log(procData);
       return procData;
     } else {
       alert(`No City Found`);
@@ -211,9 +210,8 @@ const DomUpdates = (() => {
 DomUpdates.setWeatherNow();
 DomUpdates.init();
 
-const date = new Date(
-  1672109607 * 1000 + new Date().getTimezoneOffset() * 60 * 1000 + 3600 * 1000
-);
-console.log(
-  date.toLocaleString(`pt-pt`, { dateStyle: `medium`, timeStyle: `short` })
-);
+const yeartxt = document.querySelector(`#year`);
+const now = new Date();
+const yearNow = now.getFullYear();
+
+yeartxt.textContent = yearNow;
