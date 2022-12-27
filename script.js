@@ -67,8 +67,6 @@ const parsedatahigh = async function () {
   return [temphigh, templow];
 };
 
-weatherforecast();
-
 const apirequests = (() => {
   const relevantData = {};
 
@@ -97,14 +95,14 @@ const apirequests = (() => {
     relevantData.wind = rawData.wind;
     relevantData.temps = rawData.main;
     relevantData.timezone = rawData.timezone;
-    return relevantData;
   };
-  return { weather, parseData };
+  return { weather, parseData, relevantData };
 })();
 
 const DomUpdates = (() => {
   const setWeatherNow = async () => {
-    const tempdata = await apirequests.parseData();
+    await apirequests.parseData();
+    const tempdata = await apirequests.relevantData;
     const parsetemps = await parsedatahigh();
     const weatherImg = document.querySelector(`#weather-img`);
     const cityName = document.querySelector(`#city-name`);
