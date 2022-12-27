@@ -1,5 +1,6 @@
 let city = `Munich`;
 let unit = `C`;
+let unitlong = `metric`;
 const apikey = `5d1cc257e99203c5d51d3dc88e914990`;
 
 const weather = async function () {
@@ -43,10 +44,9 @@ document
 
 const weatherforecast = async function () {
   const data = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${apikey}&units=metric`
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${apikey}&units=${unitlong}`
   );
   const procData = await data.json();
-  console.log(procData);
   return procData;
 };
 
@@ -72,7 +72,7 @@ const apirequests = (() => {
 
   const weather = async function () {
     const data = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apikey}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apikey}&units=${unitlong}`
     ).catch(function (err) {
       console.log(err);
     });
@@ -136,7 +136,10 @@ const DomUpdates = (() => {
       const tempDiv = document.createElement(`div`);
       const hr = document.createElement(`hr`);
       tempDiv.classList.add(`row`);
-      tempDiv.innerHTML = `<div>${a.dt_txt}</div>
+      tempDiv.innerHTML = `<div>${new Date(a.dt * 1000).toLocaleString(
+        `pt-pt`,
+        { dateStyle: `medium`, timeStyle: `short` }
+      )}</div>
 
       <div class="center">
         <img
@@ -167,14 +170,30 @@ const DomUpdates = (() => {
       city = search.value;
     }
     DomUpdates.setWeatherNow();
+    search.value = "";
   };
-  const searchBtn = function () {
+  const init = function () {
     document
       .querySelector(`#searchBtn`)
       .addEventListener(`click`, DomUpdates.searchBar);
+    document.querySelector(`.slider`).addEventListener(`click`, function (e) {
+      DomUpdates.unitChanger();
+    });
   };
-  return { setWeatherNow, searchBar, searchBtn };
+  const unitChanger = function () {
+    const temptoggleinput = document.querySelector(`#temptoggle`);
+
+    if (temptoggleinput.checked) {
+      unit = `C`;
+      unitlong = `metric`;
+    } else {
+      unit = `F`;
+      unitlong = `imperial`;
+    }
+    DomUpdates.setWeatherNow();
+  };
+  return { setWeatherNow, searchBar, init, unitChanger };
 })();
 
 DomUpdates.setWeatherNow();
-DomUpdates.searchBtn();
+DomUpdates.init();

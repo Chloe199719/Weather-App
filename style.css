@@ -115,9 +115,9 @@ a {
   border: 1px black solid;
   border-radius: 50px;
 }
-.nav-item:hover {
+/* .nav-item:hover {
   background-color: dodgerblue;
-}
+} */
 .nav-menu.active {
   opacity: 100%;
   top: 98px;
