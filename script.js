@@ -12,23 +12,6 @@ const weather = async function () {
   return procData;
 };
 
-// const placeData = async function () {
-//   const div = document.createElement(`div`);
-//   let date = new Date();
-//   let currentdate = new Date();
-
-//   let datatest = await weather();
-
-//   currentdate.setTime(datatest.dt * 1000);
-//   date.setTime(datatest.sys.sunrise * 1000);
-
-//   div.textContent = `City ${datatest.name}, ${datatest.timezone} ${
-//     datatest.wind.speed * 3.6
-//   }, ${date} /////// ${currentdate.toLocaleString(`DE-DE`)} `;
-
-//   //   document.body.appendChild(div);
-// };
-
 const hamburger = document.querySelector(`.hamburger`);
 const navMenu = document.querySelector(`.nav-menu`);
 
@@ -215,3 +198,14 @@ const now = new Date();
 const yearNow = now.getFullYear();
 
 yeartxt.textContent = yearNow;
+
+const hoverpath = document.querySelector(`path`);
+const svg = document.querySelector(`svg`);
+
+svg.addEventListener(`mouseover`, function (e) {
+  hoverpath.setAttribute(`fill`, `black`);
+});
+
+svg.addEventListener(`mouseleave`, function (e) {
+  hoverpath.setAttribute(`fill`, `blue`);
+});
