@@ -1,4 +1,4 @@
-let city = `Mauern`;
+let city = `Munich`;
 let unit = `C`;
 const apikey = `5d1cc257e99203c5d51d3dc88e914990`;
 
@@ -104,11 +104,15 @@ const DomUpdates = (() => {
     await apirequests.parseData();
     const tempdata = await apirequests.relevantData;
     const parsetemps = await parsedatahigh();
+    const forecast = await weatherforecast();
     const weatherImg = document.querySelector(`#weather-img`);
     const cityName = document.querySelector(`#city-name`);
     const weather = document.querySelector(`#weather`);
     const temp = document.querySelector(`#temp`);
     const range = document.querySelector(`#range`);
+    const header = document.querySelector(`#cityname`);
+    const container = document.querySelector(`.container`);
+    header.textContent = tempdata.cityname;
     cityName.textContent = tempdata.cityname;
     weather.textContent =
       tempdata.weather[0].description.charAt(0).toUpperCase() +
@@ -118,8 +122,59 @@ const DomUpdates = (() => {
     range.textContent = `H:${Math.floor(
       parsetemps[0]
     )}°${unit} | L:${Math.floor(parsetemps[1])}°${unit}`;
+    container.innerHTML = `<div class="test">
+    <div class="row legend">
+      <div>Hour</div>
+      <div class="center"></div>
+      <div class="center">Chance of Rain</div>
+      <div class="center">Humidity</div>
+      <div class="right">Temperature</div>
+    </div>
+    <hr />
+  </div>`;
+    forecast.list.forEach((a) => {
+      const tempDiv = document.createElement(`div`);
+      const hr = document.createElement(`hr`);
+      tempDiv.classList.add(`row`);
+      tempDiv.innerHTML = `<div>${a.dt_txt}</div>
+
+      <div class="center">
+        <img
+          src="https://openweathermap.org/img/wn/${a.weather[0].icon}@4x.png"
+          alt="${
+            a.weather[0].description.charAt(0).toUpperCase() +
+            a.weather[0].description.slice(1)
+          }"
+          title= "${
+            a.weather[0].description.charAt(0).toUpperCase() +
+            a.weather[0].description.slice(1)
+          }"
+          width="80px
+          "
+        />
+      </div>
+      <div class="center">${Math.floor(a.pop * 100)}%</div>
+      <div class="center">${a.main.humidity}%</div>
+      <div class="right">${Math.floor(a.main.temp)}° ${unit}</div>
+    </div>`;
+      container.append(tempDiv, hr);
+    });
   };
-  return { setWeatherNow };
+
+  const searchBar = function () {
+    const search = document.querySelector(`#search`);
+    if (search.value !== "") {
+      city = search.value;
+    }
+    DomUpdates.setWeatherNow();
+  };
+  const searchBtn = function () {
+    document
+      .querySelector(`#searchBtn`)
+      .addEventListener(`click`, DomUpdates.searchBar);
+  };
+  return { setWeatherNow, searchBar, searchBtn };
 })();
 
 DomUpdates.setWeatherNow();
+DomUpdates.searchBtn();
