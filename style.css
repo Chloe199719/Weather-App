@@ -159,6 +159,10 @@ a {
 .search-box button:active {
   transform: translate(2px, -2px);
 }
+.localTime {
+  display: flex;
+  align-items: center;
+}
 
 .tempToggle {
   display: flex;

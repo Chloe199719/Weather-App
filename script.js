@@ -112,6 +112,15 @@ const DomUpdates = (() => {
     const range = document.querySelector(`#range`);
     const header = document.querySelector(`#cityname`);
     const container = document.querySelector(`.container`);
+    const localTime = document.querySelector(`.localTime`);
+    localTime.textContent = `Local Time:  ${new Date(
+      new Date().getTime() +
+        new Date().getTimezoneOffset() * 60 * 1000 +
+        tempdata.timezone * 1000
+    ).toLocaleString(`pt-pt`, {
+      dateStyle: `medium`,
+      timeStyle: `short`,
+    })}`;
     header.textContent = tempdata.cityname;
     cityName.textContent = tempdata.cityname;
     weather.textContent =
@@ -136,10 +145,14 @@ const DomUpdates = (() => {
       const tempDiv = document.createElement(`div`);
       const hr = document.createElement(`hr`);
       tempDiv.classList.add(`row`);
-      tempDiv.innerHTML = `<div>${new Date(a.dt * 1000).toLocaleString(
-        `pt-pt`,
-        { dateStyle: `medium`, timeStyle: `short` }
-      )}</div>
+      tempDiv.innerHTML = `<div>${new Date(
+        a.dt * 1000 +
+          new Date().getTimezoneOffset() * 60 * 1000 +
+          tempdata.timezone * 1000
+      ).toLocaleString(`pt-pt`, {
+        dateStyle: `medium`,
+        timeStyle: `short`,
+      })}</div>
 
       <div class="center">
         <img
@@ -197,3 +210,10 @@ const DomUpdates = (() => {
 
 DomUpdates.setWeatherNow();
 DomUpdates.init();
+
+const date = new Date(
+  1672109607 * 1000 + new Date().getTimezoneOffset() * 60 * 1000 + 3600 * 1000
+);
+console.log(
+  date.toLocaleString(`pt-pt`, { dateStyle: `medium`, timeStyle: `short` })
+);
