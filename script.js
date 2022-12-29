@@ -109,6 +109,7 @@ const DomUpdates = (() => {
       tempdata.weather[0].description.charAt(0).toUpperCase() +
       tempdata.weather[0].description.slice(1);
     weatherImg.src = `http://openweathermap.org/img/wn/${tempdata.weather[0].icon}@2x.png`;
+    weatherImg.setAttribute(`title`, tempdata.weather[0].description);
     temp.textContent = `${Math.floor(tempdata.temps.temp)}° ${unit}`;
     range.textContent = `H:${Math.floor(
       parsetemps[0]

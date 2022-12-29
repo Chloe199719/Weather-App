@@ -32,6 +32,7 @@ header {
   background-color: #06283d;
   border-bottom: 1px black solid;
   color: #dff6ff;
+  flex-wrap: wrap;
 }
 li {
   list-style: none;
@@ -42,6 +43,7 @@ nav {
   align-items: center;
   flex: 1;
   position: relative;
+  flex-wrap: wrap;
 }
 a {
   text-decoration: none;
@@ -140,6 +142,7 @@ a {
   flex: 1;
   display: flex;
   gap: 50px;
+  flex-wrap: wrap;
 }
 
 .search-box input {
